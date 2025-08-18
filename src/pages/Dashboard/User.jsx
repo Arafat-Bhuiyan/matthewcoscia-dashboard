@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import { Search, Eye, Edit, Trash2, X } from "lucide-react";
+import { useState } from "react";
+import { Search, Eye, Edit, Trash2, Calendar, MailPlus } from "lucide-react";
 
 const User = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [selectedUser, setSelectedUser] = useState(null); // row click করলে user store হবে
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const users = [
     {
@@ -13,6 +12,8 @@ const User = () => {
       status: "Active",
       email: "aalissa@gmail.com",
       dateOfBirth: "02/08/1975",
+      height: "5.4 Ft",
+      weight: 60,
     },
     {
       id: 2,
@@ -20,6 +21,8 @@ const User = () => {
       status: "Active",
       email: "jazmin@gmail.com",
       dateOfBirth: "02/08/1983",
+      height: "5.6 Ft",
+      weight: 65,
     },
     {
       id: 3,
@@ -27,6 +30,8 @@ const User = () => {
       status: "Blocked",
       email: "ace@yahoo.com",
       dateOfBirth: "02/08/1985",
+      height: "5.9 Ft",
+      weight: 72,
     },
     {
       id: 4,
@@ -34,6 +39,8 @@ const User = () => {
       status: "Active",
       email: "jessicaschmidt@outlook.com",
       dateOfBirth: "02/08/1982",
+      height: "5.5 Ft",
+      weight: 58,
     },
     {
       id: 5,
@@ -41,6 +48,8 @@ const User = () => {
       status: "Active",
       email: "clay@test.com",
       dateOfBirth: "02/14/1971",
+      height: "6.0 Ft",
+      weight: 80,
     },
     {
       id: 6,
@@ -48,6 +57,8 @@ const User = () => {
       status: "Active",
       email: "princeotter@gmail.com",
       dateOfBirth: "07/04/1982",
+      height: "5.8 Ft",
+      weight: 70,
     },
     {
       id: 7,
@@ -55,6 +66,8 @@ const User = () => {
       status: "Active",
       email: "reece@yahoo.com",
       dateOfBirth: "02/08/1980",
+      height: "5.10 Ft",
+      weight: 75,
     },
     {
       id: 8,
@@ -62,6 +75,8 @@ const User = () => {
       status: "Active",
       email: "anastasia.garh2@hotmail.com",
       dateOfBirth: "02/10/1988",
+      height: "5.3 Ft",
+      weight: 55,
     },
     {
       id: 9,
@@ -69,6 +84,8 @@ const User = () => {
       status: "Blocked",
       email: "MattieB@gmail.com",
       dateOfBirth: "02/08/1974",
+      height: "5.7 Ft",
+      weight: 68,
     },
     {
       id: 10,
@@ -76,6 +93,8 @@ const User = () => {
       status: "Blocked",
       email: "kadenthomas@gmail.com",
       dateOfBirth: "11/26/1954",
+      height: "5.11 Ft",
+      weight: 77,
     },
   ];
 
@@ -156,7 +175,7 @@ const User = () => {
                 className={`border-b border-gray-100 hover:bg-gray-50 cursor-pointer ${
                   index % 2 === 1 ? "bg-gray-50" : "bg-white"
                 }`}
-                onClick={() => setSelectedUser(user)} // row click করলে modal এ দেখাবে
+                onClick={() => setSelectedUser(user)}
               >
                 <td className="py-4 px-4 text-sm text-gray-700">{user.id}</td>
                 <td className="py-4 px-4 text-sm text-gray-900 font-medium">
@@ -207,29 +226,47 @@ const User = () => {
       {/* Modal */}
       {selectedUser && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm z-50">
-          <div className="bg-white p-6 rounded-xl shadow-lg w-96 relative">
-            {/* Close button */}
-            <button
-              onClick={() => setSelectedUser(null)}
-              className="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
-            >
-              <X size={20} />
-            </button>
-
+          <div className="bg-white p-6 rounded-xl shadow-lg w-96">
             <div className="flex flex-col items-center text-center space-y-4">
+              {/* Upper Part */}
               <div className="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xl font-bold">
                 {selectedUser.fullName[0]}
               </div>
-              <div>
-                <h2 className="text-lg font-semibold">
-                  {selectedUser.fullName}
-                </h2>
-                <p className="text-sm text-gray-600">
-                  DOB: {selectedUser.dateOfBirth}
-                </p>
-                <p className="text-sm text-gray-600">{selectedUser.email}</p>
+              {/* Middle Part */}
+              <div className="border rounded-2xl p-3">
+                <div>
+                  <h2 className="text-xs text-start font-medium my-2">
+                    Name: {selectedUser.fullName}
+                  </h2>
+                  <div className="border-b mt-2"></div>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-600 font-medium flex gap-2 items-center my-2">
+                    <Calendar /> {selectedUser.dateOfBirth}
+                  </p>
+                  <div className="border-b mt-2"></div>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-600 font-medium flex gap-2 items-center my-2">
+                    <MailPlus /> {selectedUser.email}
+                  </p>
+                  <div className="border-b mt-2"></div>
+                </div>
+                <div>
+                  <div className="flex gap-4 items-center font-medium my-2">
+                    <p className="text-xs text-gray-600 flex gap-2 items-center">
+                      Height: {selectedUser.height}
+                    </p>
+                    <div className="border h-5 mt-1"></div>
+                    <p className="text-xs text-gray-600 flex gap-2 items-center">
+                      Weight: {selectedUser.weight}
+                    </p>
+                  </div>
+                  <div className="border-b mt-2"></div>
+                </div>
               </div>
-              <button>Cancel</button>
+              {/* Cancel */}
+              <button className="px-7 py-3 rounded-md bg-[#FF3D00] text-white font-normal text-sm" onClick={() => setSelectedUser(null)}>Cancel</button>
             </div>
           </div>
         </div>

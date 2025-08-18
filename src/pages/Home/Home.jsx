@@ -3,7 +3,7 @@ import { Bell } from "lucide-react";
 import { Sidebar } from "../Dashboard/Sidebar";
 import { Dashboard } from "../Dashboard/Dashboard";
 import User from "../Dashboard/User";
-import { Settings } from "../Dashboard/Settings";
+import Settings from "../Dashboard/Settings/Settings";
 
 const Home = () => {
   const [activePage, setActivePage] = useState("dashboard"); // default dashboard
