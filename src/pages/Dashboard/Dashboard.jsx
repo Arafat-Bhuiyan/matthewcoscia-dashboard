@@ -14,8 +14,8 @@ import up from "../../assets/trendup.png";
 import down from "../../assets/trenddown.png";
 
 export const Dashboard = () => {
-  const [selectedRevenueMonth, setSelectedRevenueMonth] = useState("October");
-  const [selectedUserMonth, setSelectedUserMonth] = useState("October");
+  const [selectedRevenueMonth, setSelectedRevenueMonth] = useState("January");
+  const [selectedUserMonth, setSelectedUserMonth] = useState("January");
   const [revenueDropdownOpen, setRevenueDropdownOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 

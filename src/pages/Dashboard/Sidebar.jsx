@@ -1,6 +1,7 @@
 import React from "react";
 import { LayoutDashboard, User, Settings, LogOut } from "lucide-react";
 import logo from "../../assets/logo.png";
+import { useNavigate } from "react-router-dom";
 
 export const Sidebar = ({ activePage, setActivePage }) => {
   const menuItems = [
@@ -8,6 +9,8 @@ export const Sidebar = ({ activePage, setActivePage }) => {
     { key: "user", icon: User, label: "User" },
     { key: "settings", icon: Settings, label: "Settings" },
   ];
+    const navigate = useNavigate();
+
 
   return (
     <div className="w-48 bg-gray-800 text-white flex flex-col min-h-screen relative">
@@ -49,7 +52,7 @@ export const Sidebar = ({ activePage, setActivePage }) => {
 
       {/* Logout */}
       <div className="absolute bottom-4 left-4 right-4">
-        <div className="text-gray-300 hover:text-white px-3 py-2 rounded-lg flex items-center space-x-3 cursor-pointer">
+        <div onClick={() => navigate("/login")} className="text-gray-300 hover:text-white px-3 py-2 rounded-lg flex items-center space-x-3 cursor-pointer">
           <LogOut size={18} />
           <span className="text-sm">Logout</span>
         </div>
