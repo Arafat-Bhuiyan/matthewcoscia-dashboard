@@ -17,10 +17,18 @@ export const authApi = api.injectEndpoints({
         method: "GET",
       }),
     }),
+    // === Users List ===
+    usersList: builder.query({
+      query: () => ({
+        url: "/accounts/users/",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
 export const {
   useLoginMutation,
   useDashboardStatsQuery,
+  useUsersListQuery,
 } = authApi;
