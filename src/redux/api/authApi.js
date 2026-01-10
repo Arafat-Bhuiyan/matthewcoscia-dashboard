@@ -49,6 +49,24 @@ export const authApi = api.injectEndpoints({
       }),
       invalidatesTags: ["Users"],
     }),
+    // === Update Terms & Conditions ===
+    termsConditions: builder.mutation({
+      query: (data) => ({
+        url: "/cores/terms-conditions/update/",
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["Users"],
+    }),
+    // === Update Privacy Policy ===
+    privacyPolicy: builder.mutation({
+      query: (data) => ({
+        url: "/cores/privacy-policy/update/",
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["Users"],
+    }),
   }),
 });
 
@@ -59,4 +77,6 @@ export const {
   useUserDetailQuery,
   useUpdateUserMutation,
   useDeleteUserMutation,
+  useTermsConditionsMutation,
+  usePrivacyPolicyMutation,
 } = authApi;
