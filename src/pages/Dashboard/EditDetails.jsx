@@ -77,19 +77,6 @@ const EditDetails = ({ user, onClose }) => {
             </div>
             <div>
               <div className="flex items-center gap-2 my-2">
-                <MailPlus size={16} className="text-gray-600" />
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="text-xs text-gray-600 font-medium outline-none w-full bg-transparent"
-                />
-              </div>
-              <div className="border-b mt-2"></div>
-            </div>
-            <div>
-              <div className="flex items-center gap-2 my-2">
                 <Phone size={16} className="text-gray-600" />
                 <input
                   type="text"
