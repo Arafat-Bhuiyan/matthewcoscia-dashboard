@@ -9,7 +9,6 @@ import {
   ResponsiveContainer,
   BarChart,
   Bar,
-  Tooltip,
 } from "recharts";
 import up from "../../assets/trendup.png";
 import down from "../../assets/trenddown.png";
@@ -42,17 +41,6 @@ export const Dashboard = () => {
 
   // Sample data for user statistics
   const userData = stats?.charts?.user_growth || [];
-
-  const CustomTooltip = ({ active, payload }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="bg-green-500 text-white px-2 py-1 rounded text-xs font-medium">
-          {payload[0].value}
-        </div>
-      );
-    }
-    return null;
-  };
 
   return (
     <div className="flex-1 p-8 space-y-8">
@@ -139,7 +127,6 @@ export const Dashboard = () => {
                 tickLine={false}
                 tick={{ fontSize: 12, fill: "#9CA3AF" }}
               />
-              <Tooltip content={<CustomTooltip />} cursor={false} />
               <defs>
                 <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#BBF246" stopOpacity={0.3} />
@@ -156,6 +143,11 @@ export const Dashboard = () => {
               />
             </LineChart>
           </ResponsiveContainer>
+
+          {/* Revenue tooltip */}
+          <div className="absolute top-8 left-1/4 bg-green-500 text-white px-2 py-1 rounded text-xs font-medium">
+            64.3664
+          </div>
         </div>
       </div>
 

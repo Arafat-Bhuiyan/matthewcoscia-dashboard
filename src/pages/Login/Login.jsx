@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../redux/api/authApi";
+import { setUser } from "../../redux/features/authSlice";
 import woman from "../../assets/women.png";
 import star from "../../assets/star.png";
 import bg from "../../assets/login-bg.png";
@@ -14,14 +16,14 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [login, { isLoading }] = useLoginMutation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const res = await login({ email, password }).unwrap();
-      localStorage.setItem("access", res.access_token);
+      dispatch(setUser({ user: res.data, token: res.access_token }));
       localStorage.setItem("refresh", res.refresh_token);
-      localStorage.setItem("user", JSON.stringify(res.data));
       navigate("/");
     } catch (err) {
       console.error(err);

@@ -10,9 +10,17 @@ export const authApi = api.injectEndpoints({
         body: data,
       }),
     }),
+    // === Dashboard ===
+    dashboardStats: builder.query({
+      query: () => ({
+        url: "/dashboard-stats/",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
 export const {
   useLoginMutation,
+  useDashboardStatsQuery,
 } = authApi;
