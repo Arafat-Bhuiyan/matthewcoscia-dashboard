@@ -1,38 +1,46 @@
 import React from "react";
 import { Calendar, MailPlus, Phone } from "lucide-react";
+import { useUserDetailQuery } from "../../redux/api/authApi";
 
 const ViewDetails = ({ user, onClose }) => {
+  const { data: userData, isLoading } = useUserDetailQuery(user.id);
+
+  const name = userData?.name;
+  const email = userData?.email;
+  const phone = userData?.phone;
+  const dateJoined = userData?.date_joined ? new Date(userData.date_joined).toLocaleDateString() : "";
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm z-50">
       <div className="bg-white p-6 rounded-xl shadow-lg w-96">
         <div className="flex flex-col items-center text-center space-y-4 w-full">
           {/* Upper Part */}
           <div className="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xl font-bold">
-            {user.fullName[0]}
+            {isLoading ? "..." : name?.[0]}
           </div>
           {/* Middle Part */}
           <div className="border rounded-2xl p-3 w-full">
             <div>
               <h2 className="text-xs text-start font-medium my-2">
-                Name: {user.fullName}
+                Name: {isLoading ? "Loading..." : name}
               </h2>
               <div className="border-b mt-2"></div>
             </div>
             <div>
               <p className="text-xs text-gray-600 font-medium flex gap-2 items-center my-2">
-                <Calendar size={16} /> {user.dateOfBirth}
+                <Calendar size={16} /> {isLoading ? "Loading..." : dateJoined}
               </p>
               <div className="border-b mt-2"></div>
             </div>
             <div>
               <p className="text-xs text-gray-600 font-medium flex gap-2 items-center my-2">
-                <MailPlus size={16} /> {user.email}
+                <MailPlus size={16} /> {isLoading ? "Loading..." : email}
               </p>
               <div className="border-b mt-2"></div>
             </div>
             <div>
               <p className="text-xs text-gray-600 font-medium flex gap-2 items-center my-2">
-                <Phone size={16} /> {user.email}
+                <Phone size={16} /> {isLoading ? "Loading..." : phone}
               </p>
               <div className="border-b mt-2"></div>
             </div>

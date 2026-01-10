@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { Search, Eye, Edit, Trash2 } from "lucide-react";
 import { toast } from "react-toastify";
-import { useUsersListQuery } from "../../redux/api/authApi";
+import {
+  useUsersListQuery,
+  useDeleteUserMutation,
+} from "../../redux/api/authApi";
 import ViewDetails from "./ViewDetails";
 import EditDetails from "./EditDetails";
 
@@ -12,6 +15,7 @@ const User = () => {
   const [users, setUsers] = useState([]);
 
   const { data: usersData } = useUsersListQuery();
+  const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
 
   useEffect(() => {
     if (usersData) {
@@ -53,20 +57,34 @@ const User = () => {
     toast(
       ({ closeToast }) => (
         <div>
-          <p className="text-sm font-medium text-gray-800">Are you sure you want to delete?</p>
+          <p className="text-sm font-medium text-gray-800">
+            Are you sure you want to delete?
+          </p>
           <div className="flex gap-2 justify-end mt-3">
             <button
-              onClick={() => {
-                setUsers((prev) => prev.filter((user) => user.id !== id));
-                closeToast();
+              onClick={async () => {
+                try {
+                  await deleteUser(id).unwrap();
+                  toast.success("User deleted successfully!");
+                  closeToast();
+                } catch (error) {
+                  console.error("Failed to delete user:", error);
+                  toast.error(
+                    error?.data?.message ||
+                      "Failed to delete user. Please try again."
+                  );
+                  closeToast();
+                }
               }}
-              className="bg-red-500 text-white px-3 py-1 rounded text-xs"
+              className="bg-red-500 text-white px-3 py-1 rounded text-xs disabled:opacity-50"
+              disabled={isDeleting}
             >
-              Confirm
+              {isDeleting ? "Deleting..." : "Confirm"}
             </button>
             <button
               onClick={closeToast}
               className="bg-gray-300 text-black px-3 py-1 rounded text-xs"
+              disabled={isDeleting}
             >
               Cancel
             </button>
@@ -189,7 +207,10 @@ const User = () => {
 
       {/* Modal */}
       {selectedUser && (
-        <ViewDetails user={selectedUser} onClose={() => setSelectedUser(null)} />
+        <ViewDetails
+          user={selectedUser}
+          onClose={() => setSelectedUser(null)}
+        />
       )}
       {editUser && (
         <EditDetails user={editUser} onClose={() => setEditUser(null)} />

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Calendar, MailPlus, Phone } from "lucide-react";
+import { useUpdateUserMutation } from "../../redux/api/authApi";
+import { toast } from "react-toastify";
 
 const EditDetails = ({ user, onClose }) => {
   const [formData, setFormData] = useState({
@@ -9,13 +11,30 @@ const EditDetails = ({ user, onClose }) => {
     phone: user?.phone || "",
   });
 
+  const [updateUser, { isLoading }] = useUpdateUserMutation();
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSave = () => {
-    console.log("Updated Data:", formData);
-    onClose();
+  const handleSave = async () => {
+    try {
+      const updateData = {
+        name: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        // date_joined can be included if the API supports it
+      };
+
+      await updateUser({ id: user.id, data: updateData }).unwrap();
+      toast.success("User updated successfully!");
+      onClose();
+    } catch (error) {
+      console.error("Failed to update user:", error);
+      toast.error(
+        error?.data?.message || "Failed to update user. Please try again."
+      );
+    }
   };
 
   return (
@@ -30,7 +49,9 @@ const EditDetails = ({ user, onClose }) => {
           <div className="border rounded-2xl p-3 w-full">
             <div>
               <div className="flex items-center gap-2 my-2">
-                <span className="text-xs font-medium whitespace-nowrap">Name:</span>
+                <span className="text-xs font-medium whitespace-nowrap">
+                  Name:
+                </span>
                 <input
                   type="text"
                   name="fullName"
@@ -84,10 +105,11 @@ const EditDetails = ({ user, onClose }) => {
           {/* Buttons */}
           <div className="flex gap-4">
             <button
-              className="px-7 py-3 rounded-md bg-[#BBF246] text-black font-normal text-sm"
+              className="px-7 py-3 rounded-md bg-[#BBF246] text-black font-normal text-sm disabled:opacity-50 disabled:cursor-not-allowed"
               onClick={handleSave}
+              disabled={isLoading}
             >
-              Save
+              {isLoading ? "Saving..." : "Save"}
             </button>
             <button
               className="px-7 py-3 rounded-md bg-[#FF3D00] text-white font-normal text-sm"
