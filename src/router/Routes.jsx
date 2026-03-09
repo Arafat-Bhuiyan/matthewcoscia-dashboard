@@ -5,6 +5,8 @@ import Login from "../pages/Login/Login";
 import ContactSupport from "../pages/ContactSupport/ContactSupport";
 import PrivacyPolicy from "../pages/PrivacyPolicy/PrivacyPolicy";
 import AccountDeletion from "../pages/AccountDeletionForm/DeleteForm";
+import ProtectedRoute from "./ProtectedRoute";
+import PublicRoute from "./PublicRoute";
 
 const router = createBrowserRouter([
   {
@@ -14,23 +16,43 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: (
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/login",
-        element: <Login />,
+        element: (
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        ),
       },
       {
         path: "/contact",
-        element: <ContactSupport />,
+        element: (
+          <ProtectedRoute>
+            <ContactSupport />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/privacy-policy",
-        element: <PrivacyPolicy />,
+        element: (
+          <ProtectedRoute>
+            <PrivacyPolicy />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/account-deletion-form",
-        element: <AccountDeletion />,
+        element: (
+          <ProtectedRoute>
+            <AccountDeletion />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

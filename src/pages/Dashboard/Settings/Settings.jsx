@@ -6,7 +6,7 @@ const Settings = () => {
   const [activeTab, setActiveTab] = useState("terms");
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex">
       <div className="flex-1">
         {/* Content Area */}
 

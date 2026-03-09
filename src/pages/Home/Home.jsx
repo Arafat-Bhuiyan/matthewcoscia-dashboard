@@ -9,19 +9,19 @@ const Home = () => {
   const [activePage, setActivePage] = useState("dashboard"); // default dashboard
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex h-screen overflow-hidden bg-gray-100">
       {/* Sidebar */}
       <Sidebar activePage={activePage} setActivePage={setActivePage} />
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-h-screen bg-gray-50">
+      <div className="flex-1 flex flex-col bg-gray-50 overflow-hidden">
         {/* Header */}
         <div className="shadow-sm px-6 py-4 flex justify-end">
           <Bell size={20} className="text-black cursor-pointer" />
         </div>
 
         {/* Content Area */}
-        <div className="flex-1">
+        <div className="flex-1 overflow-y-auto">
           {activePage === "dashboard" && <Dashboard />}
           {activePage === "user" && <User />}
           {activePage === "settings" && <Settings />}

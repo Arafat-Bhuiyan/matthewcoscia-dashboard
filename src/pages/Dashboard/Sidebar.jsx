@@ -2,6 +2,8 @@ import React from "react";
 import { LayoutDashboard, User, Settings, LogOut } from "lucide-react";
 import logo from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/features/authSlice";
 
 export const Sidebar = ({ activePage, setActivePage }) => {
   const menuItems = [
@@ -9,11 +11,16 @@ export const Sidebar = ({ activePage, setActivePage }) => {
     { key: "user", icon: User, label: "User" },
     { key: "settings", icon: Settings, label: "Settings" },
   ];
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
 
   return (
-    <div className="w-48 bg-gray-800 text-white flex flex-col min-h-screen relative">
+    <div className="w-48 bg-gray-800 text-white flex flex-col h-screen relative">
       {/* Logo */}
       <div className="p-4 flex items-center justify-center space-x-2">
         <img src={logo} alt="logo" />
@@ -52,7 +59,10 @@ export const Sidebar = ({ activePage, setActivePage }) => {
 
       {/* Logout */}
       <div className="absolute bottom-4 left-4 right-4">
-        <div onClick={() => navigate("/login")} className="text-gray-300 hover:text-white px-3 py-2 rounded-lg flex items-center space-x-3 cursor-pointer">
+        <div
+          onClick={handleLogout}
+          className="text-gray-300 hover:text-white px-3 py-2 rounded-lg flex items-center space-x-3 cursor-pointer"
+        >
           <LogOut size={18} />
           <span className="text-sm">Logout</span>
         </div>

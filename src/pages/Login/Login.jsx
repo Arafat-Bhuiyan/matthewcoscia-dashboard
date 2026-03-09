@@ -20,6 +20,19 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    // Static credentials for testing
+    if (email === "admin@admin.com" && password === "123") {
+      const mockUser = {
+        user: { id: 1, name: "Admin User", email: "admin@admin.com" },
+        token: "static-token-for-testing",
+      };
+      dispatch(setUser(mockUser));
+      localStorage.setItem("refresh", "static-refresh-token");
+      navigate("/");
+      return;
+    }
+
     try {
       const res = await login({ email, password }).unwrap();
       dispatch(setUser({ user: res.data, token: res.access_token }));
@@ -36,7 +49,10 @@ const Login = () => {
       {/* Container */}
       {/* Left Side - Login Form */}
       <div className="w-full lg:w-1/2 flex flex-col justify-center items-center bg-white px-8 md:px-16 min-h-screen lg:min-h-0">
-        <form onSubmit={handleLogin} className="w-full max-w-md lg:w-96 flex flex-col items-center justify-center">
+        <form
+          onSubmit={handleLogin}
+          className="w-full max-w-md lg:w-96 flex flex-col items-center justify-center"
+        >
           <h2 className="text-2xl font-bold mb-8">LOGIN</h2>
 
           {/* Username */}
